@@ -16,36 +16,67 @@ $subscribe = new Subscribe($db);
  
 // query subscribes
 $stmt = $subscribe->read();
-$num = $stmt->rowCount();
- 
+
+$num = $stmt->num_rows;
+
+// echo $num;
+// die;
+// $num = $stmt->rowCount();
+// if($num) {
+//     echo "Alleluia Meje o to rara";
+// }
+
 // check if more than 0 record found
 if($num>0){
  
     // subscribes array
-    $subscribes_arr=array();
-    $subscribes_arr["records"]=array();
+    $subscribes_arr = array();
+    $subscribes_arr["records"] = array();
  
-    // retrieve our table contents
-    // fetch() is faster than fetchAll()
-    // http://stackoverflow.com/questions/2770630/pdofetchall-vs-pdofetch-in-a-loop
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+    // while ($row = $stmt->fetch_assoc()){
+    //     // extract row
+    //     // this will make $row['name'] to
+    //     // just $name only
+    //     // extract($row);
+ 
+    //     // $subscribe_item=array(
+    //     //     "id" => $row['id'],
+    //     //     "email" => $row['name']
+    //     // );
+ 
+    //     // array_push($subscribes_arr["records"], $subscribe_item);
+    //     // echo "Wetin you wan go do for ketu self?";
+
+    //     $data = array (
+    //         'id' => 
+    //     )
+    // }
+
+    while ($row = $stmt->fetch_assoc()) {
         // extract row
         // this will make $row['name'] to
         // just $name only
         extract($row);
- 
-        $subscribe_item=array(
-            "id" => $id,
-            "name" => $name
+
+        $subscribe_item = array(
+            "id" => $row['id'],
+            "email" => $row['email']
         );
- 
+
         array_push($subscribes_arr["records"], $subscribe_item);
     }
- 
+
     echo json_encode($subscribes_arr);
-}
- 
-else{
+
+    // $array = [];
+    // for($i = 0; $i<=$num; $i++) {
+    //     while($row = $stmt->fetch_assoc()) {
+    //         $array[$i++] = $row;
+
+    //         echo json_encode($array)."\n";
+    //     }
+    // }
+} else {
     echo json_encode(
         array("message" => "No subscribes found.")
     );

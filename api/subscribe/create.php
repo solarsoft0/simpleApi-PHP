@@ -29,14 +29,9 @@ if($product->create()){
     echo json_encode(
         array("message" => "Subscription  Successfull")
     );
-}
- 
-
-// if unable to create the product, tell the user
-else{
-  
-
-     echo json_encode(
+} else {
+    // if unable to create the product, tell the user
+    echo json_encode(
         array("message" => "Unable to Subscribe.")
     );
 }

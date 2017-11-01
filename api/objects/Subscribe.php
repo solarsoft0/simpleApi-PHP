@@ -1,9 +1,9 @@
 <?php
-class Subscribe{
+class Subscribe {
  
     // database connection and table name
     private $conn;
-    private $table_name = "Subscriber";
+    private $table_name = "subscribers";
  
     // object properties
     public $id;
@@ -16,20 +16,22 @@ class Subscribe{
     }
 
     // read products
-function read(){
- 
-    // select all query
-    $query = ` SELECT *
-            FROM {$this->table_name} `;
- 
-    // prepare query statement
-    $stmt = $this->conn->prepare($query);
- 
-    // execute query
-    $stmt->execute();
- 
-    return $stmt;
-}
+    function read(){
+    
+        // select all query
+        $query = "SELECT * FROM {$this->table_name}";
+    
+        // prepare query statement
+        // $stmt = $this->conn->prepare($query);
+    
+        // // execute query
+        // if(!$stmt->execute()) return FALSE;
+    
+        // return $stmt;
+
+        $execute = $this->conn->query($query);
+        return $execute;
+    }
 
 
 
