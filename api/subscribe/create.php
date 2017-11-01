@@ -18,12 +18,18 @@ $db = $database->getConnection();
 $subscribe = new Subscribe($db);
  
 // get posted data
-$subscribe->name = $_GET['name'];
+$subscribe->email = $_GET['email'];
+
+$checkExist = $subscribe->checkEmail();
 
 // set product property values
  
 // create the product
-if($subscribe->create() == true){
+if($checkExist == true) {
+    echo json_encode(
+        array("message" => "Email is already subscribed")
+    );
+} elseif($subscribe->create() == true) {
     echo json_encode(
         array("message" => "Subscription  Successfull")
     );

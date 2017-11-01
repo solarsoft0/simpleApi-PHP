@@ -6,7 +6,7 @@ class Subscribe {
     private $table_name = "subscribers";
  
     // object properties
-    public $name;
+    public $email;
  
     // constructor with $db as database connection
     public function __construct($db){
@@ -37,9 +37,10 @@ function create() {
 
     
     // sanitize
-    $this->name = htmlspecialchars(strip_tags($this->name));
-    // $query = 'INSERT INTO '. $this->table_name .' (first_name) VALUES ("$this->name")';
-    $stmt = $this->conn->query("INSERT INTO subscribers(email) VALUES (" . $this->name . ")");
+    $this->email = htmlspecialchars(strip_tags($this->email));
+    
+    // $query = 'INSERT INTO '. $this->table_email .' (first_name) VALUES ("$this->name")';
+    $stmt = $this->conn->query("INSERT INTO subscribers(email) VALUES ('" . $this->email . "')");
  
     // prepare query
     // $stmt = $this->conn->query($query);
@@ -50,11 +51,23 @@ function create() {
     if($stmt) {
         return true;
     } else {
-        // return $stmt;
-        var_dump($stmt);
-        die;
+        return $stmt;
     }
 }
+
+    function checkEmail() {
+    // query to insert record
+    // sanitize
+    $this->email = htmlspecialchars(strip_tags($this->email));
+    
+    // $query = 'INSERT INTO '. $this->table_email .' (first_name) VALUES ("$this->name")';
+        $stmt = $this->conn->query("SELECT * FROM subscribers WHERE email='$email'");
+        if ($stmt->num_rows) {
+            return true;
+        } else {
+            return $stmt;
+        }
+    }
 
 
 }
