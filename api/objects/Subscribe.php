@@ -31,13 +31,15 @@ class Subscribe {
         return $execute;
     }
 
-function create() {
+public function create() {
  
     // query to insert record
 
     
     // sanitize
     $this->email = htmlspecialchars(strip_tags($this->email));
+
+    $stmt2 = $this->conn->query("SELECT * FROM subscribers WHERE email='$this->email'")->num_rows;
     
     // $query = 'INSERT INTO '. $this->table_email .' (first_name) VALUES ("$this->name")';
     $stmt = $this->conn->query("INSERT INTO subscribers(email) VALUES ('" . $this->email . "')");
@@ -48,26 +50,13 @@ function create() {
     // bind values
     
     // execute query
-    if($stmt) {
+    if($stmt2 >= 1) {
+        return false;
+    } elseif($stmt) {
         return true;
     } else {
-        return $stmt;
+        return 0;
     }
 }
-
-    function checkEmail() {
-    // query to insert record
-    // sanitize
-    $this->email = htmlspecialchars(strip_tags($this->email));
-    
-    // $query = 'INSERT INTO '. $this->table_email .' (first_name) VALUES ("$this->name")';
-        $stmt = $this->conn->query("SELECT * FROM subscribers WHERE email='$email'");
-        if ($stmt->num_rows) {
-            return true;
-        } else {
-            return $stmt;
-        }
-    }
-
 
 }
