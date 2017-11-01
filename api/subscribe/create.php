@@ -25,7 +25,7 @@ $product->name = $data->name;
 $product->created = date('Y-m-d H:i:s');
  
 // create the product
-if($product->create()){
+if($subscribe->create()){
     echo json_encode(
         array("message" => "Subscription  Successfull")
     );
