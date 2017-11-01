@@ -18,14 +18,12 @@ $db = $database->getConnection();
 $subscribe = new Subscribe($db);
  
 // get posted data
-$data = json_decode(file_get_contents("php://input"));
- 
+$subscribe->name = $_GET['name'];
+
 // set product property values
-$product->name = $data->name;
-$product->created = date('Y-m-d H:i:s');
  
 // create the product
-if($subscribe->create()){
+if($subscribe->create() == true){
     echo json_encode(
         array("message" => "Subscription  Successfull")
     );
