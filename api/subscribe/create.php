@@ -27,11 +27,11 @@
 
     if($subscribeNow == false) {
         echo json_encode(
-            array("message" => "Email is already subscribed")
+            array("message" => "Email is already subscribed.")
         );
     } elseif($subscribeNow == true) {
         echo json_encode(
-            array("message" => "Subscription  Successfull")
+            array("message" => "Subscription  Successfull.")
         );
     } else {
         // if unable to create the product, tell the user

@@ -5,53 +5,90 @@ header("Content-Type: application/json; charset=UTF-8");
  
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/subscribe.php';
+include_once '../objects/register.php';
  
-// instantiate database and subscribe object
+// instantiate database and register object
 $database = new Database();
 $db = $database->getConnection();
  
 // initialize object
-$subscribe = new Subscribe($db);
+$register = new register($db);
  
-// query subscribes
-$stmt = $subscribe->read();
-$num = $stmt->rowCount();
- 
+// query registers
+$stmt = $register->read();
+
+$num = $stmt->num_rows;
+
+// echo $num;
+// die;
+// $num = $stmt->rowCount();
+// if($num) {
+//     echo "Alleluia Meje o to rara";
+// }
+
 // check if more than 0 record found
 if($num>0){
  
-    // subscribes array
-    $subscribes_arr=array();
-    $subscribes_arr["records"]=array();
+    // registers array
+    $registers_arr = array();
+    $registers_arr["records"] = array();
  
-    // retrieve our table contents
-    // fetch() is faster than fetchAll()
-    // http://stackoverflow.com/questions/2770630/pdofetchall-vs-pdofetch-in-a-loop
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+    // while ($row = $stmt->fetch_assoc()){
+    //     // extract row
+    //     // this will make $row['name'] to
+    //     // just $name only
+    //     // extract($row);
+ 
+    //     // $register_item=array(
+    //     //     "id" => $row['id'],
+    //     //     "email" => $row['name']
+    //     // );
+ 
+    //     // array_push($registers_arr["records"], $register_item);
+    //     // echo "Wetin you wan go do for ketu self?";
+
+    //     $data = array (
+    //         'id' => 
+    //     )
+    // }
+
+    while ($row = $stmt->fetch_assoc()) {
         // extract row
         // this will make $row['name'] to
         // just $name only
         extract($row);
- 
-        $subscribe_item=array(
-            "id" => $id,
-            "name" => $name,
-            "description" => html_entity_decode($description),
-            "price" => $price,
-            "category_id" => $category_id,
-            "category_name" => $category_name
+
+        $register_item = array(
+            "id" => $row['id'],
+            "first_name" => $row['first_name'],
+            "surname" => $row['surname'],
+            "phone_number" => $row['phone_number'],
+            "gender" => $row['gender'],
+            "dob" => $row['dob'],
+            "photo" => $row['photo'],
+            "address" => $row['address'],
+            "city" => $row['city'],
+            "state" => $row['state'],
+            "country" => $row['country'],
+            "time" => $row['time']
         );
- 
-        array_push($subscribes_arr["records"], $subscribe_item);
+
+        array_push($registers_arr["records"], $register_item);
     }
- 
-    echo json_encode($subscribes_arr);
-}
- 
-else{
+
+    echo json_encode($registers_arr);
+
+    // $array = [];
+    // for($i = 0; $i<=$num; $i++) {
+    //     while($row = $stmt->fetch_assoc()) {
+    //         $array[$i++] = $row;
+
+    //         echo json_encode($array)."\n";
+    //     }
+    // }
+} else {
     echo json_encode(
-        array("message" => "No subscribes found.")
+        array("message" => "No Riders found.")
     );
 }
 ?>

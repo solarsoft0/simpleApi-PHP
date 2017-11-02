@@ -39,10 +39,10 @@ public function create() {
     // sanitize
     $this->email = htmlspecialchars(strip_tags($this->email));
 
-    $stmt2 = $this->conn->query("SELECT * FROM subscribers WHERE email='$this->email'")->num_rows;
+    $stmt2 = $this->conn->query("SELECT * FROM {$this->table_name} WHERE email='$this->email'")->num_rows;
     
     // $query = 'INSERT INTO '. $this->table_email .' (first_name) VALUES ("$this->name")';
-    $stmt = $this->conn->query("INSERT INTO subscribers(email) VALUES ('" . $this->email . "')");
+    $stmt = $this->conn->query("INSERT INTO {$this->table_name}(email) VALUES ('" . $this->email . "')");
  
     // prepare query
     // $stmt = $this->conn->query($query);

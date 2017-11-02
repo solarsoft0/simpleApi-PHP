@@ -60,7 +60,8 @@ if($num>0){
 
         $subscribe_item = array(
             "id" => $row['id'],
-            "email" => $row['email']
+            "email" => $row['email'],
+            "time" => $row['time']
         );
 
         array_push($subscribes_arr["records"], $subscribe_item);
