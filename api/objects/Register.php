@@ -60,7 +60,7 @@ public function create() {
     $this->country = htmlspecialchars(strip_tags($this->country));
 
     // Check if Email is registered
-    $stmt2 = $this->conn->query("SELECT * FROM {$this->table_name} WHERE email='$this->email'")->num_rows;
+    $stmt_first = $this->conn->query("SELECT * FROM {$this->table_name} WHERE email='$this->email'")->num_rows;
     
     // $query = 'INSERT INTO '. $this->table_email .' (first_name) VALUES ("$this->name")';
     $stmt = $this->conn->query("INSERT INTO {$this->$table_name}(first_name, surname, phone_number, gender, email, dob, photo, address, city, state, country) VALUES ('$this->first_name', '$this->surname', '$this->phone_number', '$this->gender', '$this->email', '$this->dob', '$this->photo', '$this->address', '$this->city', '$this->state', '$this->country')");
@@ -68,10 +68,8 @@ public function create() {
     // prepare query
     // $stmt = $this->conn->query($query);
     
-    // bind values
-    
     // execute query
-    if($stmt2 >= 1) {
+    if($stmt_first >= 1) {
         return false;
     } elseif($stmt) {
         return true;
